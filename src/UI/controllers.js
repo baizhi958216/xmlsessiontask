@@ -21,9 +21,6 @@ new Promise(() => {
   })
 })
 
-pageOption = (e) => {
-  console.log(Page)
-}
 pageController = (e) => {
   if (Page != undefined)
     switch (e) {
@@ -39,7 +36,7 @@ pageController = (e) => {
       case 1:
         Page = DOMReRender.length - 1// 总页数
         // console.log('每页显示', Pages, ', 分', Math.ceil(Page / Pages), '页', ', 最后一页', Page - ((Math.ceil(Page / Pages) - 1) * Pages))
-        t_Page = (DOMReRender.length - 1)-(Page - ((Math.ceil(Page / Pages) - 1) * Pages))
+        t_Page = (DOMReRender.length - 1) - (Page - ((Math.ceil(Page / Pages) - 1) * Pages))
         document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
         for (let i = DOMReRender.length - 1; i > t_Page; i--) {
           document.querySelector('#books').innerHTML += DOMReRender[i].innerHTML
@@ -70,8 +67,14 @@ asc = () => { }
 // 降序
 des = () => { }
 // 自定义浏览页面
-customPage = () => {
-  const input = document.querySelector('input').value.replace(/\D/g, '')
+customPage = (c_page) => {
+  let input
+  if (c_page) {
+    input = c_page
+    document.querySelector('input').value = c_page
+  } else {
+    input = document.querySelector('input').value.replace(/\D/g, '')
+  }
   if (input > 0 && input < DOMReRender.length) {
     document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
 
@@ -79,6 +82,13 @@ customPage = () => {
       document.querySelector('#books').innerHTML += DOMReRender[i].innerHTML
     }
     Pages = input
+    Page = 1
+  } else if (input == 0) {
+    document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
+    for (let index = 0; index < DOMReRender.length; index++) {
+      document.querySelector('#books').innerHTML += DOMReRender[index].outerHTML
+    }
+    Pages = DOMReRender.length - 1
     Page = 1
   } else {
     alert('页面大小错误, 请填写正确的页面大小')
