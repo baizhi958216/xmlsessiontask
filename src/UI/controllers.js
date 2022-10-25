@@ -38,12 +38,12 @@ pageController = (e) => {
       // 最后页
       case 1:
         Page = DOMReRender.length - 1// 总页数
+        // console.log('每页显示', Pages, ', 分', Math.ceil(Page / Pages), '页', ', 最后一页', Page - ((Math.ceil(Page / Pages) - 1) * Pages))
+        t_Page = (DOMReRender.length - 1)-(Page - ((Math.ceil(Page / Pages) - 1) * Pages))
         document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
-        Array.from(DOMReRender).map((element, index) => {
-          if (index > 0 && index > 6) {
-            document.querySelector('#books').innerHTML += element.innerHTML
-          }
-        })
+        for (let i = DOMReRender.length - 1; i > t_Page; i--) {
+          document.querySelector('#books').innerHTML += DOMReRender[i].innerHTML
+        }
         break
       // 前一页
       case 2:
