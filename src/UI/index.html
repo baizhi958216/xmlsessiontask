@@ -1,18 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="zh">
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+    <style>
+      p {
+        font-size: 12px;
+      }
 
-<body>
-    <script>
-        fetch('http://localhost:3000')
-            .then((data) => console.log(data))
-    </script>
-</body>
+      input {
+        width: 50px;
+      }
+    </style>
+  </head>
 
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>XML预览</h1>
+      </div>
+      <hr />
+      <div class="content">
+        <p>要求：</p>
+        <p>
+          1.
+          设计合适的用户接口，可自定义浏览页面大小（每页可展示图书条目的数量）。
+        </p>
+        <p>
+          2.
+          基于选定的页面大小，用户可选择性地浏览“最前页”、“最后页”、“前一页”、“后一页”。
+        </p>
+        <p>3. 基于三层架构读取XML文档。</p>
+        <p>4. 单页中按“价格”进行“降序”或“升序”排序浏览。</p>
+        <p>5. 仿照本章案例完成相关设计并实现相关功能。</p>
+      </div>
+      <hr />
+      <div class="view">
+        <div class="controller">
+          <span>自定义浏览页面大小</span>
+          <input />
+          <button onclick="customPage()">确定</button>
+          <select>
+            <option onclick="pageOption('reset')">全部</option>
+            <option onclick="pageOption('2')">2</option>
+            <option onclick="pageOption('4')">4</option>
+            <option onclick="pageOption('6')">6</option>
+          </select>
+          <button onclick="pageController(0)">最前页</button>
+          <button onclick="pageController(2)">前一页</button>
+          <button onclick="pageController(3)">后一页</button>
+          <button onclick="pageController(1)">最后页</button>
+        </div>
+        <table border="1">
+            <tbody id="books"></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="./request.js"></script>
+    <script src="./controllers.js"></script>
+  </body>
 </html>
