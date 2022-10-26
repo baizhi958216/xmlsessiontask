@@ -11,7 +11,7 @@ new Promise(() => {
     // 标题添加升序/降序按钮
     DOMReRender = Array.from(xmldoc.children[0].children)
     TBodyTitle = DOMReRender[0]
-    TBodyTitle.children.age.innerHTML += '<button onclick="asc()">升序</button><button onclick="des()">降序</button>'
+    TBodyTitle.children.age.innerHTML += '<button onclick="trsort(1)">升序</button><button onclick="trsort(0)">降序</button>'
     DOMReRender.map((ele, index) => {
       ele.id = index
     })
@@ -73,10 +73,40 @@ pageController = (e) => {
         break
     }
 }
-// 升序
-asc = () => { }
-// 降序
-des = () => { }
+
+trsort = (method) => {
+  let tr = document.querySelectorAll('tr')
+  let asctr = []
+  for (let index = 1; index < tr.length; index++) {
+    asctr.push(tr[index])
+  }
+  asctr.sort((tr1, tr2) => {
+    let n1, n2
+    if (tr1.cells[2] && tr2.cells[2]) {
+      n1 = parseInt(tr1.cells[2].innerHTML)
+      n2 = parseInt(tr2.cells[2].innerHTML)
+    }
+    return n1 - n2
+  })
+  switch (method) {
+    // 降序
+    case 0:
+      asctr.reverse()
+      for (let index = 0; index < asctr.length; index++) {
+        document.querySelector('#books').appendChild(asctr[index])
+      }
+      break
+    // 升序
+    case 1:
+      for (let index = 0; index < asctr.length; index++) {
+        document.querySelector('#books').appendChild(asctr[index])
+      }
+      break
+    default:
+      break
+  }
+}
+
 // 自定义浏览页面
 customPage = (c_page) => {
   let input
