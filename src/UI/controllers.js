@@ -37,19 +37,15 @@ pageController = (e) => {
         break
       // 最后页
       case 1:
-        Page = Math.ceil((DOMReRender.length - 1) / Pages)
-        // console.log('每页显示', Pages, ', 分', Math.ceil(Page / Pages), '页', ', 最后一页', Page - ((Math.ceil(Page / Pages) - 1) * Pages))
-        t_Page = (DOMReRender.length - 1) - ((DOMReRender.length - 1) - ((Math.ceil((DOMReRender.length - 1) / Pages) - 1) * Pages))
-        document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
-        for (let i = DOMReRender.length - 1; i > t_Page; i--) {
-          document.querySelector('#books').innerHTML += DOMReRender[i].outerHTML
+        for (let index = 0; index < DOMReRender.length; index++) {
+          pageController(3)
         }
         break
       // 前一页
       case 2:
         if (Page > 1) {
           // trs 前一页第一列id
-          let trs = +document.querySelectorAll('tr')[document.querySelectorAll('tr').length - Pages].id-Pages
+          let trs = +document.querySelectorAll('tr')[document.querySelectorAll('tr').length - Pages].id - Pages
           Page--
           document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
           for (let index = trs; index < trs + Pages; index++) {
@@ -67,7 +63,7 @@ pageController = (e) => {
           for (let index = trs + 1; index <= trs + Pages; index++) {
             if (DOMReRender[index]) {
               document.querySelector('#books').innerHTML += DOMReRender[index].outerHTML
-            }else{
+            } else {
               document.querySelector('#books').innerHTML += `<tr id=${index}></tr>`
             }
           }
