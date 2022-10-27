@@ -13,10 +13,10 @@ export function GetXBLXML() {
 
 export function GetStudentXML(req: IncomingMessage) {
   return new Promise((resolve, reject) => {
-    // 读取DATA下的xbl.xml文件
+    // 读取DATA下的student.xml文件
     readFile(`${__dirname}/../../DATA/student.xml`, (err, data) => {
       if (err) throw err
-      // 将该对象转为Promise对象 返回xbl.xml文件流
+      // 将该对象转为Promise对象 返回student.xml文件流
       resolve(data)
     })
   })
