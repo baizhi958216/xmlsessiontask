@@ -44,20 +44,30 @@ pageController = (e) => {
       // 前一页
       case 2:
         if (Page > 1) {
-          // trs 前一页第一列id
-          let trs = +document.querySelectorAll('tr')[document.querySelectorAll('tr').length - Pages].id - Pages
+          // trs 当前页最小id
+          let trs = DOMReRender.length
+          document.querySelectorAll('tr').forEach(ele=>{
+            if(ele.id<trs&&ele.id>0){
+                trs = parseInt(ele.id)
+            }
+          })
           Page--
           document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
           for (let index = trs; index < trs + Pages; index++) {
-            document.querySelector('#books').innerHTML += DOMReRender[index].outerHTML
+            document.querySelector('#books').innerHTML += DOMReRender[index-Pages].outerHTML
           }
         }
         break
       // 后一页
       case 3:
-        // trs 当前页最后列id
+        // trs 当前页最大id
         if (Page < Math.ceil((DOMReRender.length - 1) / Pages)) {
-          let trs = +document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].id
+            let trs=0
+            document.querySelectorAll('tr').forEach(ele=>{
+                if(ele.id>=trs){
+                    trs = parseInt(ele.id)
+                }
+            })
           Page++
           document.querySelector('#books').innerHTML = TBodyTitle.outerHTML
           for (let index = trs + 1; index <= trs + Pages; index++) {
