@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .main {
+        line-height: 30px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="selector">
+        <select class="voc"></select>
+      </div>
+      <div class="main"></div>
+    </div>
+    <script>
+      const A_Z = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+      ]
+      A_Z.forEach((item) => {
+        document.querySelector(
+          '.voc'
+        ).innerHTML += `<option onclick='access("${item}")'>${item}</option>`
+      })
+      access = (a2z) => {
+        fetch('http://127.0.0.1:3000/cet4', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ voc: a2z }),
+        })
+          .then((res) => res.text())
+          .then((res) => {
+            const parse = new DOMParser()
+            let dom = parse.parseFromString(res, 'text/html')
+            document.querySelector('.main').innerHTML = ''
+            dom.querySelector('.xqy_core_text').childNodes.forEach((cN) => {
+              if (cN.style != null && cN.style['white-space']) {
+                document.querySelector('.main').innerHTML +=
+                  cN.innerText + '<br>'
+              }
+            })
+          })
+      }
+      access('A')
+    </script>
+  </body>
+</html>
