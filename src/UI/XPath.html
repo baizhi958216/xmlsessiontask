@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .xinput {
+            border-top: 1px solid rgba(158, 158, 158, 0.671);
+            border-bottom: 1px solid rgba(158, 158, 158, 0.671);
+            padding: 10px 0;
+        }
+
+        .xinput input {
+            width: 400px;
+        }
+
+        .xshown {
+            display: flex;
+        }
+
+        .xshown .showbox {
+            border: 1px solid rgba(158, 158, 158, 0.671);
+            display: flex;
+            flex-direction: column;
+            align-items: baseline;
+            margin: 5px;
+        }
+
+        textarea {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>基与XPath的标记数据选取测试</h1>
+        <div class="xinput">
+            <span>请输入XPath</span>
+            <input type="text" id="xpathi">
+            <button id="getxpath">按当前XPath选取数据</button>
+        </div>
+        <div class="xshown">
+            <div class="showbox">
+                <button class="loadxml">加载XML文档全文</button>
+                <textarea readonly id="xmldoc" cols="50" rows="20"></textarea>
+            </div>
+            <div class="showbox">
+                <span>标记数据选取结果:</span>
+                <textarea readonly id="showxpath" cols="50" rows="20"></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="./request.js"></script>
+<script>
+    const load = document.querySelector('.loadxml')
+    let xpathi = document.querySelector('#xpathi')
+    let getxpath = document.querySelector('#getxpath')
+    load.addEventListener('click', () => {
+        GetXMLs('http://localhost:3000/XPath', 'GET').then((res) => {
+            document.querySelector('#xmldoc').value = res
+        })
+    })
+    getxpath.addEventListener('click', () => {
+        GetXPath('http://localhost:3000/XPath', xpathi.value).then(res => {
+            document.querySelector('#showxpath').value = res
+        })
+    })
+</script>
+
+</html>

@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'node:http'
 import { GetVocabulary } from '../CET4/GetCET4.service'
-import { GetStudentXML, GetXBLXML } from '../GetXML/GetXML.service'
+import { GetStudentXML, GetXBLXML, GetXPathXML } from '../GetXML/GetXML.service'
 
 export function route(req: IncomingMessage, res: ServerResponse) {
   return new Promise((resolve, reject) => {
@@ -28,9 +28,17 @@ export function route(req: IncomingMessage, res: ServerResponse) {
         })
         break
       case '/cet4':
-        GetVocabulary(req).then(data=>{
+        GetVocabulary(req).then(data => {
           res.statusCode = 200
           res.setHeader('Content-Type', 'text/html')
+          res.end(data)
+          resolve(res)
+        })
+        break
+      case '/XPath':
+        GetXPathXML(req).then((data) => {
+          res.statusCode = 200
+          res.setHeader('Content-Type', 'text/plain')
           res.end(data)
           resolve(res)
         })
